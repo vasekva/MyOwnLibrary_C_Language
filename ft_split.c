@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_countWords(char const *str, char c)
+int		ft_count_words(char const *str, char c)
 {
 	int i;
 	int words;
@@ -29,75 +29,48 @@ int		ft_countWords(char const *str, char c)
 		}
 		i++;
 	}
-	printf("\n-------------------- Numbers of String: %d -------------------\n", words);
 	return (words);
+}
+
+void	ft_do_words(const char *s, char c, int i, char **matrix)
+{
+	int		array_index;
+	int		len;
+	int		start;
+	int		num_words;
+
+	num_words = ft_count_words(s, c);
+	array_index = 0;
+	start = 0;
+	while (array_index < num_words)
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (i == 0 || ((s[i] != c) && (s[i - 1] == c || s[i - 1] == '\0')))
+			start = i;
+		if (s[i + 1] == c || s[i + 1] == '\0')
+		{
+			len = i - start + 1;
+			matrix[array_index++] = ft_substr(s, i - len + 1, len);
+		}
+		i++;
+	}
+	matrix[array_index] = NULL;
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**matrix_for_string;
+	char	**matrix_for_strings;
 	int		num_words;
 	int		i;
-	int		len;
-	int 	start;
-	int 	array_index;
 
 	i = 0;
-	start = 0;
-	len = 0;
-	array_index = 0;
 	if (!s)
 		return (NULL);
-	num_words = ft_countWords(s, c); // считает кол-во слов в целом в строке
-	matrix_for_string = (char **)malloc(num_words * sizeof(char *) + 1); // выделяем память под все строки
-	if (matrix_for_string == NULL)
+	num_words = ft_count_words(s, c);
+	if (!(matrix_for_strings = (char **)malloc(num_words * sizeof(char *) + 1)))
 		return (NULL);
-
-	printf("\n =================== В твоей строке %d слов(а) ========================\n", num_words);
-
-	while (array_index < num_words)
-	{
-		while (s[i] && s[i] == c)
-		{
-			i++;
-		}
-		if (i == 0 || ((s[i] != c) && (s[i - 1] == c || s[i - 1] == '\0')))
-		{
-			printf("\n ----------------------------------------------------------------\n");
-			printf("\nСлово началось под индексом %d символом |-%c-| \n", i, s[i]);
-			start = i;
-		}
-		if (s[i + 1] == c || s[i + 1] == '\0')
-		{
-			len = i - start + 1;
-			//end = i;
-			printf("\nСлово длинной %d закончилось символом |-%c-| под индексом %d\n", len, s[i], i);
-			printf("\nПередаю в substr строку с началом под индексом %d и длинной %d \n", start, len);
-			printf("\nЗаписываю в матрицу итоговую строку в ячейку под номером %d\n", array_index);
-			printf("\n ----------------------------------------------------------------\n");
-			matrix_for_string[array_index] = ft_substr(s, i - len + 1, len);
-			printf("\nРезультат: %s", matrix_for_string[array_index]);
-			array_index++;
-			len = 0;
-		}
-		i++;
-	}
-	matrix_for_string[array_index] = NULL;
-	return (matrix_for_string);
+	ft_do_words(s, c, i, matrix_for_strings);
+	return (matrix_for_strings);
 }
-
-int		main(void)
-{
-	char *str1 = {"Hello7World7I'm7Back7and7i always will be there                             "};
-	//char *str2 = {"Hello World and i don't know what to write!!!"};
-	//char *str2 = {"123 456 789 0"};
-
-	//char *str1;
-
-	//str1 = malloc(sizeof(*str1) * (ft_strlen
-	//int *start = 0;
-	//int	*end = 0;
-
-	char **matrix = ft_split(str1, '7');
-
-}
+git
