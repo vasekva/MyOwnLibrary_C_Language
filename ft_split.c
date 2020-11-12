@@ -30,7 +30,7 @@ int		ft_countWords(char const *str, char c)
 		i++;
 	}
 	printf("\n-------------------- Numbers of String: %d -------------------\n", words);
-	return (words);	
+	return (words);
 }
 
 char	**ft_split(char const *s, char c)
@@ -40,15 +40,14 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	int		len;
 	int 	start;
-	//char	*array;
-	//int		kek;
-	int array_index;
+	int 	array_index;
 
-	//kek = 0;
 	i = 0;
 	start = 0;
 	len = 0;
 	array_index = 0;
+	if (!s)
+		return (NULL);
 	num_words = ft_countWords(s, c); // считает кол-во слов в целом в строке
 	matrix_for_string = (char **)malloc(num_words * sizeof(char *) + 1); // выделяем память под все строки
 	if (matrix_for_string == NULL)
@@ -56,13 +55,13 @@ char	**ft_split(char const *s, char c)
 
 	printf("\n =================== В твоей строке %d слов(а) ========================\n", num_words);
 
-	while (s[i] != '\0')
+	while (array_index < num_words)
 	{
-		while (s[i] == ' ' && s[i] != '\0')
+		while (s[i] && s[i] == c)
 		{
 			i++;
 		}
-		if (i == 0 || ((s[i] != c && s[i] != '\0') && (s[i - 1] == c || s[i - 1] == '\0')))
+		if (i == 0 || ((s[i] != c) && (s[i - 1] == c || s[i - 1] == '\0')))
 		{
 			printf("\n ----------------------------------------------------------------\n");
 			printf("\nСлово началось под индексом %d символом |-%c-| \n", i, s[i]);
@@ -83,12 +82,13 @@ char	**ft_split(char const *s, char c)
 		}
 		i++;
 	}
+	matrix_for_string[array_index] = NULL;
 	return (matrix_for_string);
 }
 
 int		main(void)
 {
-	char *str1 = {"     Hello       World      I'm    Back    and   i always will be there            "};
+	char *str1 = {"Hello7World7I'm7Back7and7i always will be there                             "};
 	//char *str2 = {"Hello World and i don't know what to write!!!"};
 	//char *str2 = {"123 456 789 0"};
 
@@ -98,14 +98,6 @@ int		main(void)
 	//int *start = 0;
 	//int	*end = 0;
 
-	char **matrix = ft_split(str1, ' ');
+	char **matrix = ft_split(str1, '7');
 
-
-	//ft_len_first_str(str1, ' ');
-
-//	printf("-----------LEN OF FIRST STRING:  %d--------", ft_len_first_str(str1, ' '));
-
-//	printf("%d\n", ft_lenstr(str1, ' '));
-	//printf("WORDS: %d\n", ft_countWords(str1, ' '));
-//	printf("%d\n", ft_countIndex(str1, ' ', start, end));
 }
