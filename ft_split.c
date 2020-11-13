@@ -73,4 +73,3 @@ char	**ft_split(char const *s, char c)
 	ft_do_words(s, c, i, matrix_for_strings);
 	return (matrix_for_strings);
 }
-git
