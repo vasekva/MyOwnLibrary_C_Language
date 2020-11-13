@@ -68,8 +68,12 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	num_words = ft_count_words(s, c);
-	if (!(matrix_for_strings = (char **)malloc(num_words * sizeof(char *) + 1)))
+	matrix_for_strings = (char **)malloc((num_words + 1) * sizeof(char *));
+	if (!matrix_for_strings)
+	{
+		free(matrix_for_strings);
 		return (NULL);
+	}
 	ft_do_words(s, c, i, matrix_for_strings);
 	return (matrix_for_strings);
 }

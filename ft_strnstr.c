@@ -29,7 +29,8 @@ char	*ft_strnstr(const char *havstack, const char *needle, size_t len)
 	while (p_havstack[i] && i <= (len - needle_len))
 	{
 		j = 0;
-		while (needle[j] && needle[j] == p_havstack[i + j])
+		while (p_havstack[i + j] && needle[j] && i + j < len &&
+		havstack[i + j] == needle[j])
 			j++;
 		if (j == needle_len)
 			return (&p_havstack[i]);
