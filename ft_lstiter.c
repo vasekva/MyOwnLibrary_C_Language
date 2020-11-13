@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jberegon <jberegon@student.21-schoo>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 08:50:33 by jberegon          #+#    #+#             */
-/*   Updated: 2020/11/12 09:25:17 by jberegon         ###   ########.fr       */
+/*   Created: 2020/11/13 09:50:46 by jberegon          #+#    #+#             */
+/*   Updated: 2020/11/13 09:50:49 by jberegon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *list)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (list)
+	while (lst)
 	{
-		while (list && list->next != NULL)
-			list = list->next;
+		f(lst->content);
+		lst = lst->next;
 	}
-	return (list);
 }

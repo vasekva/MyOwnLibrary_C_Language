@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jberegon <jberegon@student.21-schoo>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 08:50:33 by jberegon          #+#    #+#             */
-/*   Updated: 2020/11/12 09:25:17 by jberegon         ###   ########.fr       */
+/*   Created: 2020/11/13 10:43:08 by jberegon          #+#    #+#             */
+/*   Updated: 2020/11/13 10:43:10 by jberegon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *list)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (list)
+	t_list *list;
+	t_list *new_list;
+
+	list = NULL;
+	while (lst)
 	{
-		while (list && list->next != NULL)
-			list = list->next;
+		if (!(new_list = ft_lstnew(f(lst->content))))
+		{
+			del(lst);
+			return (NULL);
+		}
+		ft_lstadd_back(&list, new_list);
+		lst = lst->next;
 	}
 	return (list);
 }
