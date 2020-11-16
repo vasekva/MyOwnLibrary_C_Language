@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-int		iteration(char *str, int index, int neg)
+static size_t	iteration(const char *str, int index, int neg)
 {
-	int i;
-	int count;
-	int res;
+	size_t i;
+	size_t count;
+	size_t res;
 
 	res = 0;
 	count = 0;
@@ -36,7 +36,7 @@ int		iteration(char *str, int index, int neg)
 	return (res);
 }
 
-int		ft_atoi(char *str)
+int				ft_atoi(const char *str)
 {
 	int	i;
 	int neg;

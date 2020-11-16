@@ -24,9 +24,15 @@ SRC = ft_atoi.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memchr.c ft_memcmp.c \
 
 OBJS = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+BONUS = ft_lstsize.c ft_lstnew.c ft_lstmap.c ft_lstlast.c ft_lstiter.c		\
+		ft_lstdelone.c ft_lstclear.c ft_lstadd_front.c ft_lstadd_back.c
+B_OBJS = $(SRC:.c=.o)
 
-CC = gcc -c $(CFLAGS)
+CC = gcc
+
+RM = rm -f
+
+CFLAGS = -Wall -Wextra -Werror
 
 all:	$(NAME)
 
@@ -34,15 +40,16 @@ $(NAME):	$(OBJS)
 	ar -rc	$(NAME) $(OBJS)
 	ranlib	$(NAME)
 
+bonus:	$(OBJS) $(B_OBJS)
+		ar -rc $(NAME) $(OBJS) $(B_OBJS)
+		ranlib $(NAME)
+
 clean:
-	/bin/rm -f $(OBJS)
+	/bin/$(RM) $(OBJS) $(B_OBJS)
 
 fclean:	clean
-	/bin/rm -f $(NAME)
+	/bin/$(RM) $(NAME)
 
 re:	fclean all
 
-.PHONY: all, clean, fclean, re
-
-norme:
-	norminette -R CheckForbiddenSourceHeader $(SRC)
+.PHONY: all, clean, fclean, re, bonus

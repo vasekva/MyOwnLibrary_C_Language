@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-int		ft_count_words(char const *str, char c)
+static	size_t	ft_count_words(char const *str, char c)
 {
-	int i;
-	int words;
+	size_t i;
+	size_t words;
 
 	i = 0;
 	words = 0;
@@ -32,17 +32,30 @@ int		ft_count_words(char const *str, char c)
 	return (words);
 }
 
-void	ft_do_words(const char *s, char c, int i, char **matrix)
+static void		ft_free_words(char **matrix, size_t num)
 {
-	int		array_index;
-	int		len;
-	int		start;
-	int		num_words;
+	if (num == 0)
+		free(matrix);
+	else
+	{
+		while ((num - 1) > 0)
+		{
+			free(matrix[num - 1]);
+			num--;
+		}
+		free(matrix);
+	}
+}
 
-	num_words = ft_count_words(s, c);
+static	void	ft_do_words(const char *s, char c, int i, char **matrix)
+{
+	size_t		array_index;
+	int			len;
+	int			start;
+
 	array_index = 0;
 	start = 0;
-	while (array_index < num_words)
+	while (array_index < ft_count_words(s, c))
 	{
 		while (s[i] && s[i] == c)
 			i++;
@@ -52,13 +65,18 @@ void	ft_do_words(const char *s, char c, int i, char **matrix)
 		{
 			len = i - start + 1;
 			matrix[array_index++] = ft_substr(s, i - len + 1, len);
+			if (!matrix[array_index - 1])
+			{
+				ft_free_words(matrix, array_index - 1);
+				return ;
+			}
 		}
 		i++;
 	}
 	matrix[array_index] = NULL;
 }
 
-char	**ft_split(char const *s, char c)
+char			**ft_split(char const *s, char c)
 {
 	char	**matrix_for_strings;
 	int		num_words;
@@ -70,10 +88,7 @@ char	**ft_split(char const *s, char c)
 	num_words = ft_count_words(s, c);
 	matrix_for_strings = (char **)malloc((num_words + 1) * sizeof(char *));
 	if (!matrix_for_strings)
-	{
-		free(matrix_for_strings);
 		return (NULL);
-	}
 	ft_do_words(s, c, i, matrix_for_strings);
 	return (matrix_for_strings);
 }

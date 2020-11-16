@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*rev_print(char *str)
+static char		*rev_print(char *str)
 {
 	int		i;
 	int		length;
@@ -31,7 +31,7 @@ char	*rev_print(char *str)
 	return (str);
 }
 
-int		is_neg(int n)
+static size_t	is_neg(int n)
 {
 	if (n < 0)
 		return (n *= -1);
@@ -39,7 +39,7 @@ int		is_neg(int n)
 		return (n);
 }
 
-size_t	ft_numsize(int n)
+static size_t	ft_numsize(int n)
 {
 	int size;
 
@@ -56,7 +56,7 @@ size_t	ft_numsize(int n)
 	return (size + 1);
 }
 
-char	*ft_itoa(int n)
+char			*ft_itoa(int n)
 {
 	char	*str;
 	size_t	len;
